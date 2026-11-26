@@ -6,7 +6,7 @@ The goal of this project was to build a machine learning model that identifies t
 
 Originally it was a pretty simple python script, but I thought it would be a good opportunity to learn some of the principles of Databricks and Spark, so I've ported it to use those as well. It extracts files, transforms them with databricks compute, then loads a model for use in the extension. 
 
-I originally gave up on the idea of an extension serving the purpose of identifying hidden prizes in terms and conditions pages because I couldn't find enough training data for examples of hidden winning T&C conditions, but I believe now I could use this smaller model to identify when you are on a T&C page, then that would trigger a request to a python server that calls a smatter AI model API that could probably identify it, so you aren't wasting tokens on every webpage you view. Though really there's nothing here specific to T&C. This could be used to train any model that finds a positive or negative match.
+I originally gave up on the idea of an extension serving the purpose of identifying hidden prizes in terms and conditions pages because I couldn't find enough training data for examples of hidden winning T&C conditions, but I believe now I could use this smaller model to identify when you are on a T&C page, then that would trigger a request to a python server that calls a smarter AI model API that could probably identify it, so you aren't wasting tokens detecting hidden prizes on every webpage you view. Though really there's nothing here specific to T&C. This could be used to train any model that finds a binary match.
 
 ## Running
 
