@@ -18,12 +18,16 @@ Run after training:
 """
 
 import json
+import os
 import pathlib
+import sys
 
 import joblib
 
-MODEL_PATH = pathlib.Path("models/model.joblib")
-OUTPUT_PATH = pathlib.Path("models/model.json")
+# First CLI arg (passed by the Databricks job) overrides the model dir.
+MODEL_DIR = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else os.getenv("MODEL_DIR", "models"))
+MODEL_PATH = MODEL_DIR / "model.joblib"
+OUTPUT_PATH = MODEL_DIR / "model.json"
 THRESHOLD = 0.80
 
 
