@@ -21,11 +21,19 @@ ARTIFACT_VOLUME="dbfs:/Volumes/workspace/gold/artifacts"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
-echo "==> Uploading training data to ${DATA_VOLUME}"
+# Use your own corpus if present, otherwise the small synthetic sample that
+# ships with the repo so a fresh clone still runs end to end.
+DATA_DIR="data"
+if [ ! -d "${DATA_DIR}/pos" ] || [ ! -d "${DATA_DIR}/neg" ]; then
+  DATA_DIR="data/sample"
+  echo "==> data/pos or data/neg not found; using sample data in ${DATA_DIR}"
+fi
+
+echo "==> Uploading training data from ${DATA_DIR} to ${DATA_VOLUME}"
 for split in pos neg; do
   # Remove first so files deleted locally also disappear remotely.
   databricks fs rm -r "${DATA_VOLUME}/${split}" 2>/dev/null || true
-  databricks fs cp -r "data/${split}" "${DATA_VOLUME}/${split}"
+  databricks fs cp -r "${DATA_DIR}/${split}" "${DATA_VOLUME}/${split}"
 done
 
 echo "==> Deploying bundle (target: ${TARGET})"

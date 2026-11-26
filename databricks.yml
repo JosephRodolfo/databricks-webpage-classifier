@@ -5,6 +5,12 @@
 bundle:
   name: databricks-webpage-classifier
 
+# Data and model artifacts live in Unity Catalog Volumes, not in the code sync.
+sync:
+  exclude:
+    - data/**
+    - models/**
+
 targets:
   dev:
     mode: development

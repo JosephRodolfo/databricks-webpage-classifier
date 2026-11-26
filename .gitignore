@@ -4,5 +4,6 @@ __pycache__/
 .env
 .databrickscfg
 .databricks/
-data/
+data/*
+!data/sample/
 models/

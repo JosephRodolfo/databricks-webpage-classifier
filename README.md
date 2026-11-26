@@ -20,6 +20,10 @@ It mirrors both folders into the bronze Volume (removing remote files you
 deleted locally), deploys the bundle, runs the job on Databricks, and downloads
 the new `models/model.json`.
 
+If `data/pos` and `data/neg` don't exist, the script falls back to the small
+synthetic corpus in `data/sample/`, so a fresh clone runs end to end without
+your own documents.
+
 Under the hood:
 
 ```bash
@@ -31,6 +35,20 @@ databricks bundle run webpage_classifier -t dev
 databricks fs cp --overwrite \
   dbfs:/Volumes/workspace/gold/artifacts/model.json ./models/model.json
 ```
+
+
+## Scope and limitations
+
+Since this was just for learning, not a production product there are a lot of known limitations, particularly with scale. Here's a few problems I identified that prevent scale:
+
+- Ingest can out of memory the driver because every document is in a list. 
+- Uploading the files is a bottle neck becaues it's one request from local machine. 
+- Having each training document be 1 txt file is inefficient. It could make use of Parquet files
+- It makes inefficient use of toPandas and scikit-learn's vocabulary. 
+- Training time is single core; Spark ML would be better on a production product. 
+- It's just one monolithic run without considering retries and paying for the whole pipeline every time. It could ingest only new files without replacing duplicates or split ingest and train into two jobs that could be retried for example.
+
+At this scale I didn't have to think about Spark operations like shuffles, skew and file layout that wouldn't fit one node. It's primarily the operational side. 
 
 
 ## Technologies
