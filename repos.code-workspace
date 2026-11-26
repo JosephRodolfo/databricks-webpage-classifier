@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../terms-and-conditions-extension"
+		},
+		{
+			"path": "../terms-conditions-training"
+		},
+		{
+			"path": "../test-extension"
+		},
+		{
+			"path": "../starfield-tests"
+		},
+		{
+			"path": "../constellation-generator"
+		},
+		{
+			"path": "../koreader"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.project.sourcePaths": [
+			""
+		],
+		"sqltools.connections": [
+			{
+				"connectionMethod": "VS Code Extension (beta)",
+				"catalog": "hive_metastore",
+				"previewLimit": 50,
+				"driver": "Databricks",
+				"name": "databricks-test",
+				"path": "/sql/1.0/warehouses/ad9d496accf4f539"
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": []
+	}
+}
