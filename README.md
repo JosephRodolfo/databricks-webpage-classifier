@@ -39,13 +39,13 @@ databricks fs cp --overwrite \
 
 ## Scope and limitations
 
-Since this was just for learning, not a production product there are a lot of known limitations, particularly with scale. Here's a few problems I identified that prevent scale:
+This project was developed as a hands-on introduction to Databricks, Apache Spark, and data engineering rather than as a production-scale machine learning system. The dataset is small enough to process on a single machine, so distributed computing is not strictly necessary. The primary objective was to gain practical experience with the Databricks platform, medallion architecture, pipeline orchestration, and deployment.
 
-- Ingest can out of memory the driver because every document is in a list. 
-- Uploading the files is a bottle neck becaues it's one request from local machine. 
-- Having each training document be 1 txt file is inefficient. It could make use of Parquet files
-- It makes inefficient use of toPandas and scikit-learn's vocabulary. 
-- Training time is single core; Spark ML would be better on a production product. 
+The current implementation makes several assumptions for simplicity:
+
+- Combined file size must be small because ingest can out of memory the driver because every document is in a list and uploading the files is a bottle neck because it's one request from local machine. 
+- Assumes each training document is one txt file, an artifact of the original: Having each training document be 1 txt file is inefficient. It could make use of Parquet files
+- Training time is single core; Spark ML would be better on a production product if justified by business needs. 
 - It's just one monolithic run without considering retries and paying for the whole pipeline every time. It could ingest only new files without replacing duplicates or split ingest and train into two jobs that could be retried for example.
 
 At this scale I didn't have to think about Spark operations like shuffles, skew and file layout that wouldn't fit one node. It's primarily the operational side. 
